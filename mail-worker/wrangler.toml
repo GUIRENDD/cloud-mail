@@ -39,9 +39,9 @@ crons = ["*/30 * * * *", "0 16 * * *"]
 #ai_model = ""
 #analysis_cache = false			
 #orm_log = false			
-#domain = []				
-#admin = ""
-#jwt_secret = ""
+domain = ["grdd.kdns.fr"]				
+admin = "grdd@grdd.kdns.fr"
+jwt_secret = "529e27f3-7ab8-45cf-a8b8-d0cdfc6ea3f8"
 
 [build]
 command = "pnpm --prefix ../mail-vue install && pnpm --prefix ../mail-vue run build"
