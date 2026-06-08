@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd mail-worker
+          cd ./mail-vue
           pnpm install
 
       - name: Deploy to Cloudflare Workers
