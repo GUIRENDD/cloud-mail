@@ -3,7 +3,7 @@ name: Deploy Worker
 on:
   push:
     branches:
-      - main # 或者你希望触发部署的分支名，比如 master
+      - main # 如果你的主分支叫 master，请改为 master
 
 jobs:
   deploy:
@@ -12,15 +12,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 🌟 核心解决步骤：在云端安装 pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9 # 这里指定 pnpm 的大版本，通常 8 或 9 都可以
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'pnpm' # 让 github 缓存依赖，加速下一次构建
+
+      # 如果你的 package.json 在子目录（比如 mail-vue）里，请取消下面两行的注释（删除 #），并将路径改对：
+      # defaults:
+      #   run:
+      #     working-directory: ./mail-vue
 
       - name: Install dependencies
-        run: |
-          cd ./mail-vue
-          pnpm install
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm run build
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
